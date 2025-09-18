@@ -1,0 +1,12 @@
+raw_root: "azure://thesismlopsstore/raw"
+processed_root: "azure://thesismlopsstore/processed"
+azure:
+  account_name: "thesismlopsstore"
+  container_raw: "raw"
+  container_processed: "processed"
+  connection_string_env: "AZURE_STORAGE_CONNECTION_STRING"
+time_column: "timestamp"
+target_columns:
+  throughput: "throughput_mbps"
+  latency: "latency_ms"
+aux_columns: ["packet_loss", "jitter_ms"]

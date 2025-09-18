@@ -1,0 +1,13 @@
+categorical: ["provider", "region", "az", "vm_size", "l4_protocol"]
+numerical: ["cpu_pct", "mem_pct", "packet_loss", "jitter_ms"]
+time_features:
+  lags:
+    throughput_mbps: [1, 3, 6, 12]
+    latency_ms: [1, 3, 6, 12]
+  rollings:
+    throughput_mbps:
+      - {window: 6, stat: "mean"}
+      - {window: 12, stat: "std"}
+    latency_ms:
+      - {window: 6, stat: "mean"}
+      - {window: 12, stat: "std"}

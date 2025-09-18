@@ -1,0 +1,7 @@
+Dataset Summary
+===============
+Total Records: 10336
+Total Features: 51
+Providers: {'AWS': 9480, 'Azure': 856}
+Protocols: {'TCP_Throughput': 7624, 'UDP_Throughput': 1872, 'tcp': 288, 'udp': 288, 'icmp': 264}
+Memory Usage: 4.02 MB
