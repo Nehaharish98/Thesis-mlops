@@ -62,13 +62,12 @@ def read_json_blob(blob_name: str):
         return None
 
 
-def write_parquet_processed(df: pd.DataFrame, name: str):
-    """Upload DataFrame as Parquet into 'processed' container."""
-    logging.info(f"Uploading DataFrame with shape {df.shape} as {name} ...")
-    out = io.BytesIO()
-    df.to_parquet(out, index=False)
-    out.seek(0)  # rewind buffer
-
+def write_csv_processed(df: pd.DataFrame, name: str):
+    """Upload DataFrame as CSV to processed container."""
+    csv_buffer = io.StringIO()
+    df.to_csv(csv_buffer, index=False)
+    csv_data = csv_buffer.getvalue().encode('utf-8')
+    
     bc = _blob.get_blob_client(_cfg["azure"]["container_processed"], name)
-    bc.upload_blob(out, overwrite=True)  # force overwrite
-    logging.info(f"✅ Upload complete: {name} ({len(df):,} rows)")
+    bc.upload_blob(csv_data, overwrite=True)
+    logging.info(f"✅ CSV Upload complete: {name}")
