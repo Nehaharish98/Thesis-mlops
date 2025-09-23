@@ -1,0 +1,25 @@
+{
+  "analysis_date": "2025-09-18T18:16:08.108006",
+  "dataset_overview": {
+    "total_records": 10336,
+    "total_features": 52,
+    "numeric_features": 18,
+    "categorical_features": 33,
+    "data_quality_score": 100.0
+  },
+  "key_insights": [
+    "Dataset is AWS-heavy: 91.7% AWS (9,480 records) vs 8.3% Azure (856 records)",
+    "Primary protocol: TCP_Throughput (7,624 records, 73.8%)",
+    "VM distribution: {'Medium': 5724, 'XLarge': 4612}",
+    "Most active source region: Unknown (10,336 experiments)",
+    "Network tools used: ['Unknown', 'PARIS_TRACEROUTE', 'HPING_S', 'NUTTCP_S']"
+  ],
+  "recommendations": [
+    "Consider balancing AWS/Azure data for comparative analysis",
+    "Focus on the dominant protocol for initial modeling efforts",
+    "Validate regional connectivity patterns for geographical insights",
+    "Assess data quality and handle missing values appropriately",
+    "Use temporal patterns to understand experiment scheduling",
+    "Leverage target bandwidth variations for performance modeling"
+  ]
+}

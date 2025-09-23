@@ -1,0 +1,22 @@
+artifact_path: /Users/nehaharish/github/Thesis-mlops/artifacts_local/2/models/m-5a1c3baf77e34d21813bce9d64b3e711/artifacts
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.pkl
+    predict_fn: predict
+    python_version: 3.11.13
+  sklearn:
+    code: null
+    pickled_model: model.pkl
+    serialization_format: cloudpickle
+    sklearn_version: 1.7.2
+mlflow_version: 3.4.0
+model_id: m-5a1c3baf77e34d21813bce9d64b3e711
+model_size_bytes: 55508
+model_uuid: m-5a1c3baf77e34d21813bce9d64b3e711
+prompts: null
+run_id: 635fdf35b259461bb8d59491cbfece4f
+utc_time_created: '2025-09-19 12:23:10.377722'

@@ -1,0 +1,22 @@
+artifact_path: /Users/nehaharish/github/Thesis-mlops/artifacts_local/1/models/m-ad22bf85ad8743938aa66800b4577308/artifacts
+flavors:
+  python_function:
+    data: model.xgb
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.xgboost
+    python_version: 3.11.13
+  xgboost:
+    code: null
+    data: model.xgb
+    model_class: xgboost.core.Booster
+    model_format: xgb
+    xgb_version: 3.0.5
+mlflow_version: 3.4.0
+model_id: m-ad22bf85ad8743938aa66800b4577308
+model_size_bytes: 15657
+model_uuid: m-ad22bf85ad8743938aa66800b4577308
+prompts: null
+run_id: d937a8c139e04de4bfa3af19a5527666
+utc_time_created: '2025-09-19 12:20:39.625310'

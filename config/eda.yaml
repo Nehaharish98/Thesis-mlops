@@ -1,0 +1,28 @@
+eda:
+  data_path: "data/processed/"
+  output_path: "reports/eda/"
+  visualization_path: "visualizations/"
+  
+  # Key features for network analysis
+  network_features:
+    performance: ["throughput_mbps", "latency_ms", "packet_loss", "jitter_ms"]
+    infrastructure: ["provider", "region", "vm_size", "l4_protocol"] 
+    temporal: ["timestamp", "experiment_datetime"]
+    
+  # Analysis focus areas
+  analysis_types:
+    - univariate_analysis
+    - bivariate_analysis  
+    - time_series_analysis
+    - provider_comparison
+    - protocol_performance
+    - geographic_analysis
+    - outlier_detection
+    
+  # Visualization settings
+  viz_settings:
+    figsize: [12, 8]
+    style: "whitegrid"
+    palette: "viridis"
+    save_format: "png"
+    dpi: 300

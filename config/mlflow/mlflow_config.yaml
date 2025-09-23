@@ -1,0 +1,48 @@
+mlflow:
+  # Tracking Configuration
+  tracking:
+    backend_store_uri: "sqlite:///mlflow_tracking/mlflow.db"  # Local SQLite database
+    default_artifact_root: "./mlflow_artifacts"              # Local artifacts storage
+    
+  # Server Configuration
+  server:
+    host: "127.0.0.1"
+    port: 5000
+    workers: 1
+    
+  # Experiment Configuration
+  experiments:
+    default_experiment: "network_monitoring_mlops"
+    
+    # Experiment definitions
+    experiments_list:
+      - name: "throughput_prediction"
+        description: "TCP throughput prediction experiments"
+        tags:
+          project: "thesis-mlops"
+          task: "regression"
+          
+      - name: "latency_forecasting" 
+        description: "Network latency time series forecasting"
+        tags:
+          project: "thesis-mlops"
+          task: "forecasting"
+          
+      - name: "anomaly_detection"
+        description: "Network performance anomaly detection"
+        tags:
+          project: "thesis-mlops" 
+          task: "anomaly"
+          
+      - name: "performance_classification"
+        description: "AWS vs Azure performance classification"
+        tags:
+          project: "thesis-mlops"
+          task: "classification"
+  
+  # Auto-logging Configuration
+  autolog:
+    sklearn: true
+    tensorflow: true
+    xgboost: true
+    lightgbm: true

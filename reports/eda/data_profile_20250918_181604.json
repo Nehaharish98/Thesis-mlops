@@ -1,0 +1,94 @@
+{
+  "timestamp": "2025-09-18T18:16:04.772610",
+  "dataset_info": {
+    "total_records": 10336,
+    "total_features": 51,
+    "memory_usage_mb": 24.83,
+    "numeric_features": 18,
+    "categorical_features": 33
+  },
+  "data_quality": {
+    "missing_values": {},
+    "duplicate_records": 0
+  },
+  "network_analysis": {
+    "provider_distribution": {
+      "AWS": 9480,
+      "Azure": 856
+    },
+    "unique_providers": 2,
+    "vm_size_distribution": {
+      "Medium": 5724,
+      "XLarge": 4612
+    },
+    "protocol_distribution": {
+      "TCP_Throughput": 7624,
+      "UDP_Throughput": 1872,
+      "tcp": 288,
+      "udp": 288,
+      "icmp": 264
+    },
+    "source_region_distribution": {
+      "Unknown": 10336
+    },
+    "dest_region_distribution": {
+      "Unknown": 10336
+    },
+    "tool_distribution": {
+      "Unknown": 9496,
+      "PARIS_TRACEROUTE": 720,
+      "HPING_S": 72,
+      "NUTTCP_S": 48
+    },
+    "numeric_summary": {
+      "duration": {
+        "mean": 299.58204334365325,
+        "median": 300.0,
+        "std": 19.391304310154492,
+        "min": 120.0,
+        "max": 480.0,
+        "missing_pct": 0.0
+      },
+      "target_bwd": {
+        "mean": 2000000000.0,
+        "median": 2000000000.0,
+        "std": 0.0,
+        "min": 2000000000.0,
+        "max": 2000000000.0,
+        "missing_pct": 0.0
+      },
+      "pkt_size": {
+        "mean": 0.0,
+        "median": 0.0,
+        "std": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "missing_pct": 0.0
+      },
+      "port": {
+        "mean": 18100.0,
+        "median": 18100.0,
+        "std": 0.0,
+        "min": 18100.0,
+        "max": 18100.0,
+        "missing_pct": 0.0
+      },
+      "granularity": {
+        "mean": 0.9958204334365325,
+        "median": 1.0,
+        "std": 0.06119234762834986,
+        "min": 0.1,
+        "max": 1.0,
+        "missing_pct": 0.0
+      },
+      "timestamp": {
+        "mean": 1428941014.725329,
+        "median": 1428777474.0,
+        "std": 1613338.5513935369,
+        "min": 1426345644.0,
+        "max": 1446485902.0,
+        "missing_pct": 0.0
+      }
+    }
+  }
+}

@@ -14,7 +14,7 @@ venv/
 data/*
 !data/raw/
 !data/processed/
-*.parquet
+#*.parquet
 *.csv
 
 # MLflow
