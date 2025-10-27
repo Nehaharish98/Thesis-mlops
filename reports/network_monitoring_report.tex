@@ -1,0 +1,98 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{url}
+\usepackage{datetime}
+
+\title{Network Monitoring: Concepts, Dataset Context, and Use Cases}
+\author{Thesis MLOps}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{Dataset Context}
+This report is grounded in the cross-cloud measurement dataset located at: \\[-0.6em]
+\texttt{data/raw/PaperDataset} (providers: AWS and Azure). It contains throughput experiments (TCP/UDP) across inter-region pairs with time-series results and summary statistics per experiment. A brief summary:
+\begin{itemize}[leftmargin=1.2em]
+  \item Providers: AWS (90 files), Azure (62 files); total results files: 152.
+  \item Protocols observed (experiment-level records): TCP ($\sim$7{,}624), UDP ($\sim$1{,}872).
+  \item Region pairs covered: 52.
+  \item Metrics captured per experiment: throughput (tput), delay, loss, route, and (optionally) jitter.
+  \item Aggregate of per-experiment summary (synthetic) statistics:
+  \begin{itemize}[noitemsep]
+    \item Throughput mean: min 0.0, max $\approx$ 893.44, avg $\approx$ 123.06 (units as recorded by the tool, typically Mbps).
+    \item Delay mean: min 0.0, max $\approx$ 1{,}235.03, avg $\approx$ 165.50 (ms).
+    \item Loss mean: min 0.0, max $\approx$ 84.26, avg $\approx$ 9.95 (unit as recorded by the tool; often percentage points).
+    \item Jitter: synthetic means frequently not present (\texttt{None}).
+  \end{itemize}
+  \item Key per-record fields: \texttt{proto}, \texttt{camp.region\_snd}, \texttt{camp.region\_rcv}, \texttt{camp.size\_snd}, \texttt{camp.size\_rcv}, \texttt{info\_snd} / \texttt{info\_rcv} (e.g., \texttt{ip\_sender}, \texttt{ip\_receiver}, \texttt{start\_time}, \texttt{duration}, \texttt{granularity}, \texttt{port}, \texttt{tool}, and optional \texttt{target\_bwd}).
+\end{itemize}
+
+\section*{Definition and Scope of Network Monitoring}
+Network monitoring is the continuous collection, measurement, and analysis of network telemetry and performance indicators to maintain service health, diagnose issues, and assure service level objectives (SLOs). It spans layers L2--L7 and includes end-to-end path characterization across domains (e.g., on-prem, cloud regions, and inter-provider links).
+
+\textbf{Scope in the referenced dataset.} The dataset focuses on active measurements between clouds/regions using tools such as \texttt{NUTTCP}, \texttt{HPING}, and \texttt{PARIS\_TRACEROUTE}. It captures per-second time series (\texttt{detailed}) and per-experiment summary (\texttt{synt}) statistics for throughput, delay, loss, and route behavior. This scope is representative of inter-region performance monitoring and path diagnostics in multi-cloud environments.
+
+\subsection*{Importance of Network Monitoring}
+\begin{itemize}[leftmargin=1.2em]
+  \item \textbf{SLA assurance and customer experience:} Detects performance regressions (e.g., increased delay or loss) that degrade user-perceived quality.
+  \item \textbf{Capacity and cost optimization:} Identifies utilization trends and informs peering, routing, and bandwidth provisioning across regions/providers.
+  \item \textbf{Fault isolation and faster MTTR:} Speeds detection and localization of issues (link congestion, misrouting, provider incidents).
+  \item \textbf{Change validation:} Verifies impact of network or application changes (routing policies, instance sizing) on throughput and latency.
+  \item \textbf{Security posture:} Baselines traffic and path behavior to surface anomalies indicative of attacks or misconfigurations.
+\end{itemize}
+
+\subsection*{Impact Without Network Monitoring}
+\begin{itemize}[leftmargin=1.2em]
+  \item \textbf{Undetected degradations:} Latency inflation (e.g., into hundreds of ms) or elevated loss (e.g., $>$\,10) can persist unnoticed, eroding SLAs.
+  \item \textbf{Prolonged incidents:} Limited visibility into inter-region paths delays root-cause analysis and increases downtime and costs.
+  \item \textbf{Inefficient spending:} Over/under-provisioning due to absent evidence on actual throughput and path performance.
+  \item \textbf{Sporadic user impact:} Path asymmetries and provider-specific impairments remain hidden, causing geographically localized issues.
+\end{itemize}
+
+\subsection*{Critical Data for Network Monitoring}
+The dataset illustrates the following critical data categories:
+\begin{itemize}[leftmargin=1.2em]
+  \item \textbf{Performance metrics:} Throughput (time series and summaries), delay, loss, and jitter (when available).
+  \item \textbf{Path information:} Route snapshots (e.g., Paris Traceroute) for hop-by-hop visibility and change detection.
+  \item \textbf{Context and configuration:} Source/receiver regions and instance sizes, protocols (TCP/UDP), measurement duration and granularity, target bandwidth, and ports.
+  \item \textbf{Timing:} Experiment \texttt{start\_time} and per-second timestamps for correlation with events and provider incidents.
+  \item \textbf{Endpoints and tools:} Sender/receiver IPs and the tool used (\texttt{NUTTCP\_S/R}, \texttt{HPING}, \texttt{PARIS\_TRACEROUTE}) enable reproducibility and provenance.
+\end{itemize}
+
+\subsection*{Important Parameters in Network Monitoring Datasets}
+Based on the fields present in the dataset and common practice:
+\begin{itemize}[leftmargin=1.2em]
+  \item \textbf{Top-level identifiers:} \texttt{proto} (TCP/UDP), \texttt{exp\_name}, \texttt{start}, \texttt{duration}.
+  \item \textbf{Campaign (topology) context:} \texttt{camp.region\_snd}, \texttt{camp.region\_rcv}, \texttt{camp.size\_snd}, \texttt{camp.size\_rcv}.
+  \item \textbf{Sender/receiver metadata:} \texttt{info\_snd} / \texttt{info\_rcv} with \texttt{ip\_sender}, \texttt{ip\_receiver}, \texttt{port}, \texttt{granularity}, \texttt{tool}, optional \texttt{target\_bwd}.
+  \item \textbf{Result structures:}
+  \begin{itemize}[noitemsep]
+    \item \texttt{tput.synt}: \{mean, median, pctl5/25/75/95, min, max, std\}.
+    \item \texttt{delay.synt}: typically mean (ms); detailed may be \texttt{null} depending on tool.
+    \item \texttt{loss.synt}: mean and distribution; detailed per-second loss values.
+    \item \texttt{route.detailed}: per-hop path snapshots; \texttt{route.synt} summarization.
+    \item \texttt{jitter}: often optional; \texttt{synt} may be missing (\texttt{None}).
+  \end{itemize}
+  \item \textbf{Timestamps and alignment:} Per-second keys in \texttt{results.*.detailed} facilitate time alignment across metrics.
+\end{itemize}
+
+\subsection*{Network Monitoring Use Cases}
+\begin{itemize}[leftmargin=1.2em]
+  \item \textbf{Inter-region performance tracking:} Monitor TCP/UDP throughput and delay distributions across region pairs (52 observed) to detect regressions.
+  \item \textbf{Provider comparison and routing:} Compare AWS vs. Azure paths and performance to inform multi-cloud routing and failover strategies.
+  \item \textbf{Capacity planning:} Use synthetic throughput summaries (avg $\approx$ 123) and upper bounds (max $\approx$ 893) to size links and instances.
+  \item \textbf{Anomaly detection and alerting:} Alert on deviations in per-second \texttt{tput} or sudden delay spikes; correlate with traceroute changes.
+  \item \textbf{SLA verification:} Validate latency/loss SLOs with experiment-level means and percentiles; document compliance.
+  \item \textbf{Change impact analysis:} Measure before/after effects of instance size, region, or policy changes on end-to-end performance.
+\end{itemize}
+
+\section*{Notes on Interpretation}
+Throughput units are as reported by \texttt{nuttcp} (commonly Mbps). Delay is in milliseconds. Loss may be reported as a proportion or percentage depending on tool configuration. Jitter was often not populated in the synthetic summaries of this dataset. Always validate units against the measurement tool version and configuration when performing compliance or capacity analysis.
+
+\end{document}
+

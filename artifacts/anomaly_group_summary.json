@@ -1,0 +1,40 @@
+{
+  "provider": {
+    "Azure": 160,
+    "AWS": 76
+  },
+  "proto": {
+    "udp": 168,
+    "tcp": 68
+  },
+  "region_snd": {
+    "us-east-1": 54,
+    "eu-west-1": 45,
+    "sa-east-1": 31,
+    "ap-southeast-1": 30,
+    "eu-west-1b": 29,
+    "ap-southeast-1a": 13,
+    "ap-southeast-1b": 7,
+    "eu-west-1c": 6,
+    "eu-west-1a": 6,
+    "us-east-1d": 5,
+    "us-east-1b": 4,
+    "sa-east-1a": 4,
+    "sa-east-1c": 1,
+    "us-east-1a": 1
+  },
+  "region_rcv": {
+    "us-east-1": 48,
+    "eu-west-1": 48,
+    "sa-east-1": 36,
+    "ap-southeast-1": 28,
+    "ap-southeast-1b": 24,
+    "eu-west-1c": 10,
+    "ap-southeast-1a": 10,
+    "eu-west-1b": 10,
+    "sa-east-1a": 9,
+    "eu-west-1a": 9,
+    "sa-east-1c": 3,
+    "us-east-1b": 1
+  }
+}

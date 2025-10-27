@@ -66,3 +66,19 @@ stop-session: mlflow-stop
 train-with-tracking: mlflow-start
 	python src/ml/train_models.py
 	@echo "🎯 Training completed with MLflow tracking!"
+
+# Reports
+report-pdf:
+	@echo "📄 Building PDF report from reports/network_monitoring_report.tex"
+	@cd reports && (command -v tectonic >/dev/null 2>&1 \
+		&& tectonic network_monitoring_report.tex \
+		|| (command -v pdflatex >/dev/null 2>&1 \
+			&& pdflatex -interaction=nonstopmode -halt-on-error network_monitoring_report.tex \
+			|| (echo "No LaTeX engine found. Install 'tectonic' or 'pdflatex' and retry: make report-pdf" && exit 1)))
+
+# Dataset building
+build-ml-dataset:
+	@echo "🧭 Building ML-friendly dataset from data/raw/PaperDataset"
+	@python src/data/build_ml_dataset.py --input data/raw/PaperDataset --output-dir data/processed --format parquet || \
+		( echo "Falling back to CSV (no parquet engine)" && \
+		  python src/data/build_ml_dataset.py --input data/raw/PaperDataset --output-dir data/processed --format csv )
